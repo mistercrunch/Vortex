@@ -77,10 +77,6 @@ public class VortexRenderer implements GLSurfaceView.Renderer {
     	// define the color we want to be displayed as the "clipping wall"
         gl.glClearColor(0,0,0, 1.0f);
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-        
     	sys.Draw(gl);
-    	
     }
-    
-    
 }

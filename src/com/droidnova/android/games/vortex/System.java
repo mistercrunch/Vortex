@@ -97,6 +97,8 @@ public class System {
 
 	public void Move()
 	{
+		//Log.d(LOG_TAG, "x:"+vActicity.ax+" y:"+vActicity.ay + " z:" + vActicity.az);
+		
 		lstActionSpots.addAll(lstActionSpotsToAdd);
 		lstActionSpotsToAdd.clear();
 		ListIterator it =lstActionSpots.listIterator();

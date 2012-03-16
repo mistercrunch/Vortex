@@ -61,15 +61,15 @@ class Particle
   
   void Move()
   {
+	  //Accelerometer
+	  Vect3d v3d = sys.vActicity.v3dAccel.Clone();
+	  v3d.Multiply(-0.05);
+      Speed.Add(v3d);
+      
 	  Pos.Add(Speed);
 	  
 	  
-	  if(sys.GRAVITY!=0)
-      {
-        Speed.y +=sys.GRAVITY;
-        Pos.Add(Speed);
-      }
-      
+	  
 /*
       if(sys.GRAVITY!=0)
       {

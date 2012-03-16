@@ -7,8 +7,6 @@ class Vect3d
 {
   double x,y,z;
   Random r;
-
-  
   
   Vect3d()
   { 
