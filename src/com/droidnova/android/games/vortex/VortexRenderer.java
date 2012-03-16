@@ -16,10 +16,7 @@ import android.content.Context;
 public class VortexRenderer implements GLSurfaceView.Renderer {
     private static final String LOG_TAG = VortexRenderer.class.getSimpleName();
  
-    private float _red = 0.9f;
-    private float _green = 0.2f;
-    private float _blue = 0.2f;
-    private long startTime = 0;
+    //private long startTime = 0;
     private Context curContext;
     private Texture texParticle;
     public System sys;
@@ -85,9 +82,5 @@ public class VortexRenderer implements GLSurfaceView.Renderer {
     	
     }
     
-    public void setColor(float r, float g, float b) {
-        _red = r;
-        _green = g;
-        _blue = b;
-    }
+    
 }

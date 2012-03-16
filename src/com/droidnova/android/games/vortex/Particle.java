@@ -12,6 +12,7 @@ class Particle
   double LifeLenght;
   int Generation;
   
+  
   public System sys;
   
   Particle(System s)
@@ -61,6 +62,7 @@ class Particle
   void Move()
   {
 	  Pos.Add(Speed);
+	  
 	  
 	  if(sys.GRAVITY!=0)
       {

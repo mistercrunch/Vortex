@@ -1,19 +1,28 @@
 package com.droidnova.android.games.vortex;
 
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import android.app.ListActivity;
+import android.util.Log;
+
 public class System {
+	//1586.50 22 juillet
+	private static final String LOG_TAG = VortexRenderer.class.getSimpleName();
 	
-	private LinkedList<Particle> lstParticles; //List of particles
+	
+	public LinkedList lstActionSpots;
+	public LinkedList lstActionSpotsToAdd;
+	
 	
 	public VortexRenderer vRenderer;
 	public VortexActivity vActicity;
 	public VortexView vView;
-		
+
 	double    GRAVITY               = -0.1; //Use 3 if not 0
 	boolean   PAUSE                 = false;
 	boolean   VORTEX                = false;
@@ -22,8 +31,8 @@ public class System {
 	double    CAM_DISTANCE         = 700;
 	double    FLOOR                = 0;
 	double    BOUNCE                = 0.63;
-	double     LIFELENGHT           = 100;
-	double     MAXGENERATION        = 3;
+	double    LIFELENGHT           = 100;
+	double    MAXGENERATION        = 3;
 	int       WIDTH                 = 900;
 	int       HEIGHT                = 600;
 	int       KEYS_WIDTH            = 30;
@@ -32,49 +41,80 @@ public class System {
 	public System(VortexActivity a, VortexRenderer r, VortexView v)
 	{
 		
-		lstParticles = new LinkedList();
+		
 		
 		vView = v;
 		vActicity = a;
 		vRenderer = r;
+		lstActionSpots = new LinkedList();
+		lstActionSpotsToAdd = new LinkedList();
 		
 		
-		GenerateParticles(WIDTH/2, HEIGHT/2, 10);
+		//GenerateParticles(WIDTH/2, HEIGHT/2, 200);
 	}
-	public void GenerateParticles(int x, int y, int Count)
-	{
-		for (int i=0; i<Count; i++)
+	
+	public void CreateActionSpot(int pid, Vect3d v3d){
+		Log.d(LOG_TAG, "CreatorA:"+pid);
+		if(GetActionSpot(pid)==null)
 		{
-			Particle p = new Particle(this);
-			p.Pos.x = x;
-			p.Pos.y = y;
-			lstParticles.add(p);
+			Log.d(LOG_TAG, "CreatorB:"+pid);
+			ActionSpot as = new ActionSpot(this, pid, v3d);
+			this.lstActionSpotsToAdd.add(as);
 		}
 	}
 	
+	public void SetActionSpotPos(int pid, double x, double y){
+		ActionSpot as = GetActionSpot(pid);
+		if (as != null){
+			as.LastPos = as.Pos.Clone();
+			as.Pos = new Vect3d(x,y,0);
+		}
+	}
+	void RemoveActionSpot(int pid)
+	{
+		//Log.d(LOG_TAG, "RemoveA:"+pid);
+		ActionSpot as = GetActionSpot(pid);
+		if (as != null){	
+			
+			as.FADE_OUT = true;
+			as.PointerId = -1;
+		} 
+		//Log.d(LOG_TAG, "RemoveB:"+pid);
+	}
+	ActionSpot GetActionSpot(int pid)
+	{
+		Iterator it = this.lstActionSpots.listIterator();
+		ActionSpot as = null;
+		while ( it.hasNext() ){
+			ActionSpot tmpAs = (ActionSpot)it.next();
+	    	if (tmpAs.PointerId==pid && !tmpAs.FADE_OUT){
+	    		as = tmpAs;
+	    		break;
+	    	}
+		}
+		return as;
+	}
+
 	public void Move()
 	{
-		
-		ListIterator<Particle> it = lstParticles.listIterator();
+		lstActionSpots.addAll(lstActionSpotsToAdd);
+		lstActionSpotsToAdd.clear();
+		ListIterator it =lstActionSpots.listIterator();
 		while ( it.hasNext() ) 
 		{
-			Particle p = (Particle)it.next();
-	    	p.Move();
-	    	if( (p.Age>p.LifeLenght ))
-	        {  
-	          //Particle has ended it's lifecycle, remove
-	           it.remove();
-	        }
+			ActionSpot as = (ActionSpot)it.next();
+	    	as.Move();
+	    	if(as.FADE_OUT && as.lstParticles.size() ==0)
+	    		it.remove();
 		}
 	}
 	public void Draw(GL10 gl)
 	{
-		Iterator<Particle> it = lstParticles.listIterator();
+		ListIterator it =lstActionSpots.listIterator();
 		while ( it.hasNext() ) 
 		{
-			Particle p = (Particle)it.next();
-	    	p.Draw(gl);
-	    	
+			ActionSpot as = (ActionSpot)it.next();
+	    	as.Draw(gl);
 		}
 	}
 }
