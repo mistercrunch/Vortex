@@ -24,9 +24,11 @@ public class VortexActivity extends Activity implements SensorEventListener{
     public void onSensorChanged(SensorEvent event) {
     	
          if (event.sensor.getType()==Sensor.TYPE_ACCELEROMETER){
-	        	 v3dAccel.x=event.values[0];
-	        	 v3dAccel.y=event.values[1];
-	        	 v3dAccel.z=event.values[2];
+        	 
+       	  	
+	        	 v3dAccel.x=event.values[0] * sys.ACCELERATION;
+	        	 v3dAccel.y=event.values[1] * sys.ACCELERATION;
+	        	 v3dAccel.z=0;
              }
          //Log.d(LOG_TAG, "x:"+ax+" y:"+ay + " z:" + az);
     }

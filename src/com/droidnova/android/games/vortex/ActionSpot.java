@@ -21,6 +21,7 @@ public class ActionSpot {
 		sys = s;
 		PointerId = pId;
 		Pos = new Vect3d();
+		LastPos = new Vect3d();
 		lstParticles = new LinkedList<Particle>();
 		col = new ColorGL();
 		col.Randomize(1);
@@ -58,10 +59,14 @@ public class ActionSpot {
 	{
 		for (int i=0; i<Count; i++)
 		{
+			
 			Particle p = new Particle(sys);
-			p.Pos.x = Pos.x;
-			p.Pos.y = Pos.y;
+			Vect3d v = Pos.Clone();
+			v.Sub(LastPos);
+			p.Speed.Add(v);
+			p.Pos= this.Pos.Clone();
 			p.cgl = this.col.Clone(); 
+			p.cgl.Randomize((float)0.3);
 		    lstParticles.add(p);
 		}
 	}

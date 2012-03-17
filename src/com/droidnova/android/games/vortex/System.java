@@ -23,7 +23,7 @@ public class System {
 	public VortexActivity vActicity;
 	public VortexView vView;
 
-	double    GRAVITY               = -0.1; //Use 3 if not 0
+	double    ACCELERATION          = -0.05;
 	boolean   PAUSE                 = false;
 	boolean   VORTEX                = false;
 	boolean   REFLECTION            = true;

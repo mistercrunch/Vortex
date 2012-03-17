@@ -12,7 +12,6 @@ class Particle
   double LifeLenght;
   int Generation;
   
-  
   public System sys;
   
   Particle(System s)
@@ -20,7 +19,7 @@ class Particle
 	  	sys = s;
 	    Generation=0;
 	    Pos = new Vect3d(100);
-	    Speed = new Vect3d(5);
+	    Speed = new Vect3d(10);
 	    OriginalSize= 100+30;
 	    LifeLenght=sys.LIFELENGHT;
 	    
@@ -28,8 +27,13 @@ class Particle
 	    
 	    cgl = new ColorGL();
 	    cgl.Randomize(1);
-	      
   }
+  Particle(System s, Vect3d speed)
+  {
+	  this(s);
+	  Speed = speed;
+  }
+  
   
   Particle(Vect3d v3d, ColorGL inColor, boolean isDown, int Velocity, System s)
   {
@@ -62,10 +66,8 @@ class Particle
   void Move()
   {
 	  //Accelerometer
-	  Vect3d v3d = sys.vActicity.v3dAccel.Clone();
-	  v3d.Multiply(-0.05);
-      Speed.Add(v3d);
-      
+	  
+      Speed.Add(sys.vActicity.v3dAccel);
 	  Pos.Add(Speed);
 	  
 	  
