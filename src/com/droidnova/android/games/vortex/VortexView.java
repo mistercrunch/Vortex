@@ -6,6 +6,7 @@ import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
  
 public class VortexView extends GLSurfaceView {
     private static final String LOG_TAG = VortexView.class.getSimpleName();
@@ -15,6 +16,7 @@ public class VortexView extends GLSurfaceView {
     public VortexView(Context context) {
         super(context);
         
+               
         _renderer = new VortexRenderer(this.getContext());
         setRenderer(_renderer);
         
@@ -37,6 +39,7 @@ public class VortexView extends GLSurfaceView {
             		//Log.d(LOG_TAG, "DOWN:"+pid);
             		Vect3d v3d = new Vect3d(event.getX(event.getActionIndex()), getHeight()-event.getY(event.getActionIndex()), 0);
             		sys.CreateActionSpot(pid, v3d);
+            		sys.FLASH=1;
             	}
             	else if (action == event.ACTION_UP || action == event.ACTION_POINTER_UP){
             		//Log.d(LOG_TAG, "UP:"+pid);

@@ -8,10 +8,13 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
  
 public class VortexActivity extends Activity implements SensorEventListener{
     private static final String LOG_TAG = VortexActivity.class.getSimpleName();
     private VortexView _vortexView;
+    
+    
     private SensorManager sensorManager;
     double ax,ay,az;   // these are the acceleration in x,y and z axis
     Vect3d v3dAccel= new Vect3d();
@@ -38,7 +41,8 @@ public class VortexActivity extends Activity implements SensorEventListener{
 
     	super.onCreate(savedInstanceState);
         _vortexView = new VortexView(this);
-        setContentView(_vortexView);
+        //_vortexView.setSystemUiVisibility(1);
+        //_vortexView.setVisibility();
         sensorManager=(SensorManager) getSystemService(SENSOR_SERVICE);
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
         

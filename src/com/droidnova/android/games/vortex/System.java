@@ -4,6 +4,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
+import java.util.Random;
 
 import javax.microedition.khronos.opengles.GL10;
 
@@ -23,6 +24,7 @@ public class System {
 	public VortexActivity vActicity;
 	public VortexView vView;
 
+	float FLASH = 1;
 	double    ACCELERATION          = -0.05;
 	boolean   PAUSE                 = false;
 	boolean   VORTEX                = false;
@@ -30,18 +32,21 @@ public class System {
 	double    BOUNCE_RANDOMNESS     = 0.9;
 	double    CAM_DISTANCE         = 700;
 	double    FLOOR                = 0;
-	double    BOUNCE                = 0.63;
+	double    BOUNCE                = 0.8;
 	double    LIFELENGHT           = 100;
+	double    LIFE_RAND           = 20;
+	
 	double    MAXGENERATION        = 3;
 	int       WIDTH                 = 900;
 	int       HEIGHT                = 600;
 	int       KEYS_WIDTH            = 30;
 	int       X_OFFSET              = -55;
+	Random	Rand;
 	
 	public System(VortexActivity a, VortexRenderer r, VortexView v)
 	{
 		
-		
+		Rand = new Random();
 		
 		vView = v;
 		vActicity = a;

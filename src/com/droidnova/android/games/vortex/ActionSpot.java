@@ -24,12 +24,13 @@ public class ActionSpot {
 		LastPos = new Vect3d();
 		lstParticles = new LinkedList<Particle>();
 		col = new ColorGL();
-		col.Randomize(1);
+		col.RandomSaturated();
 		col.r = 1;
 	}
 	public ActionSpot(System s, int pId, Vect3d v3d) {
 		this(s, pId);
 		Pos = v3d;
+		LastPos = Pos.Clone();
 	}
 	void SetPos(int x,int y){
 		Pos.x =x;
@@ -67,6 +68,7 @@ public class ActionSpot {
 			p.Pos= this.Pos.Clone();
 			p.cgl = this.col.Clone(); 
 			p.cgl.Randomize((float)0.3);
+			//p.cgl.RandomSaturated();
 		    lstParticles.add(p);
 		}
 	}

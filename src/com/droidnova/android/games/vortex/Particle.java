@@ -1,5 +1,8 @@
 package com.droidnova.android.games.vortex;
 
+import java.util.ListIterator;
+import java.util.Random;
+
 import javax.microedition.khronos.opengles.GL10;
 import javax.microedition.khronos.opengles.GL11Ext;
 
@@ -12,6 +15,7 @@ class Particle
   double LifeLenght;
   int Generation;
   
+  
   public System sys;
   
   Particle(System s)
@@ -21,7 +25,8 @@ class Particle
 	    Pos = new Vect3d(100);
 	    Speed = new Vect3d(10);
 	    OriginalSize= 100+30;
-	    LifeLenght=sys.LIFELENGHT;
+	    
+	    LifeLenght=sys.LIFELENGHT + (sys.Rand.nextFloat() * sys.LIFE_RAND);
 	    
 	    //LifeLenght=30;
 	    
@@ -68,10 +73,35 @@ class Particle
 	  //Accelerometer
 	  
       Speed.Add(sys.vActicity.v3dAccel);
+      /*
+      //Attractions
+      	ListIterator it = sys.lstActionSpots.listIterator();
+      	Vect3d vSpeedDeviation =new Vect3d();
+		while ( it.hasNext() ) 
+		{
+			ActionSpot as = (ActionSpot)it.next();
+	    	Vect3d v = Pos.Clone();
+	        v.Sub(as.Pos);
+	        v.Multiply(Math.pow(v.Distance(), 0.5) * 0.001);
+	        vSpeedDeviation.Add(v);
+		}
+		//Speed.Add(vSpeedDeviation);
+      
 	  Pos.Add(Speed);
+	  */
 	  
-	  
-	  
+	  if (sys.BOUNCE!=0){
+		  if (Pos.x <= 0 || Pos.x > sys.vView.getWidth())
+		  {  
+			  Speed.x=-Speed.x * sys.BOUNCE;
+			  Pos.x += Speed.x;
+		  }
+		  if (Pos.y <= 0 || Pos.y > sys.vView.getHeight())
+		  {
+			  Speed.y=-Speed.y * sys.BOUNCE;
+			  Pos.y += Speed.y;
+		  }
+	  }
 /*
       if(sys.GRAVITY!=0)
       {
@@ -122,20 +152,17 @@ class Particle
           //sys.vRenderer.drawBall();
           //gl.renderImage(Pos, CurrentSize(), cgl, 1);   
         	
-        	gl.glColor4f(cgl.r,cgl.g,cgl.b,1);
-        	float size = (float)(LifeLenght-Age);
-            ((GL11Ext) gl).glDrawTexfOES((float)Pos.x, (float)Pos.y, 0, size, size);
+        	
+        	//float size = (float)(LifeLenght-Age);
+        	//gl.glColor4f(cgl.r,cgl.g,cgl.b,1);
+            //((GL11Ext) gl).glDrawTexfOES((float)Pos.x, (float)Pos.y, 0, size, size);
             
+        	float f = (float)(LifeLenght-Age)/(float)LifeLenght;
+        	gl.glColor4f(cgl.r,cgl.g,cgl.b,f);
+        	float size = (float) (80 + (Pos.z/6));
+        	((GL11Ext) gl).glDrawTexfOES((float)Pos.x, (float)Pos.y, 0, size ,size );
           
-          /*
-           * Vect3d v3d = (Vect3d)Pos.Clone();
-          if(sys.REFLECTION && Pos.y > 1)
-          {
-            v3d.y = -v3d.y + KEY_HEIGHT; 
-            ColorGL cglReflection = (ColorGL)cgl.Clone();
-            gl.renderImage(v3d, CurrentSize(), cgl, 0.1);    
-          }
-          */
+          
         }
   }
   
