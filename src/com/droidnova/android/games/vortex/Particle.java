@@ -71,9 +71,9 @@ class Particle
   void Move()
   {
 	  //Accelerometer
-	  
-      Speed.Add(sys.vActicity.v3dAccel);
-      /*
+	  if(sys.ACCELEROMETER_FLAG)
+		  Speed.Add(sys.vActicity.v3dAccel);
+      
       //Attractions
       	ListIterator it = sys.lstActionSpots.listIterator();
       	Vect3d vSpeedDeviation =new Vect3d();
@@ -82,23 +82,23 @@ class Particle
 			ActionSpot as = (ActionSpot)it.next();
 	    	Vect3d v = Pos.Clone();
 	        v.Sub(as.Pos);
-	        v.Multiply(Math.pow(v.Distance(), 0.5) * 0.001);
+	        v.Multiply(Math.pow(v.Distance(), 0.5) * -0.00001);
 	        vSpeedDeviation.Add(v);
 		}
-		//Speed.Add(vSpeedDeviation);
+		Speed.Add(vSpeedDeviation);
       
 	  Pos.Add(Speed);
-	  */
 	  
-	  if (sys.BOUNCE!=0){
+	  
+	  if (sys.BOUNCE_FLAG){
 		  if (Pos.x <= 0 || Pos.x > sys.vView.getWidth())
 		  {  
-			  Speed.x=-Speed.x * sys.BOUNCE;
+			  Speed.x=-Speed.x * sys.BOUNCE_FACTOR;
 			  Pos.x += Speed.x;
 		  }
 		  if (Pos.y <= 0 || Pos.y > sys.vView.getHeight())
 		  {
-			  Speed.y=-Speed.y * sys.BOUNCE;
+			  Speed.y=-Speed.y * sys.BOUNCE_FACTOR;
 			  Pos.y += Speed.y;
 		  }
 	  }

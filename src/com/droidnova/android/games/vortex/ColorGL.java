@@ -9,33 +9,28 @@ public class ColorGL
   Random rand;
   private static final String LOG_TAG = ColorGL.class.getSimpleName();
   
-  ColorGL()
-  {
+  ColorGL(){
 	Init();
     r=g=b=0;
   }
   
-  ColorGL(ColorGL inCgl)
-  {
-	  Init();
+  ColorGL(ColorGL inCgl){
+	Init();
     r=inCgl.r;
     g=inCgl.g;
     b=inCgl.b;
   }
-  ColorGL(float inR, float inG, float inB)
-  {
+  ColorGL(float inR, float inG, float inB){
 	  Init() ; 
     SetColor(inR, inG, inB);
   }
-  ColorGL Clone()
-  {
+  ColorGL Clone(){
 	  Init();
     ColorGL tmp = new ColorGL(r, g, b);
     return tmp;
   }
   
-  void SetColor(float inR, float inG, float inB)
-  {
+  void SetColor(float inR, float inG, float inB){
     r=inR;
     g=inG;
     b=inB;
@@ -43,7 +38,6 @@ public class ColorGL
   
   void Init(){
 	  rand = new Random();
-	  
   }
   
   double Randomdouble(double range)
@@ -64,10 +58,7 @@ public class ColorGL
 	  Log.d(LOG_TAG, "red:"+Color.red(c));
   }
   
-  void Randomize(float range)
-  { 
-    		
-    
+  void Randomize(float range){ 
     r += (Randomdouble(range)) - range/2;
     g += (Randomdouble(range)) - range/2;
     b += (Randomdouble(range)) - range/2;
@@ -77,10 +68,9 @@ public class ColorGL
     FixRange(b);
   }
   void RandomSaturated(){
-	  
 	  SetHSV((float)Randomdouble(1),(float)1.0,(float)1.0);
-	  
   }
+  
   float FixRange(float a){
     if (a>1)a=1;
     else if (a<0)a=1;

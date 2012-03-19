@@ -3,5 +3,8 @@
 
     <string name="hello">Hello World, VortexActivity!</string>
     <string name="app_name">Vortex</string>
+    <string-array name="listArray">
+    </string-array>
+    <string-array name="listValues"></string-array>
 
 </resources>

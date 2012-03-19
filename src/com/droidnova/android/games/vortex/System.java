@@ -25,14 +25,19 @@ public class System {
 	public VortexView vView;
 
 	float FLASH = 1;
+	boolean   BOUNCE_FLAG			= true; 
+	double    BOUNCE_FACTOR         = 0.8;
+	
+	boolean	  ACCELEROMETER_FLAG	= true;
 	double    ACCELERATION          = -0.05;
+	
 	boolean   PAUSE                 = false;
 	boolean   VORTEX                = false;
 	boolean   REFLECTION            = true;
 	double    BOUNCE_RANDOMNESS     = 0.9;
 	double    CAM_DISTANCE         = 700;
 	double    FLOOR                = 0;
-	double    BOUNCE                = 0.8;
+	
 	double    LIFELENGHT           = 100;
 	double    LIFE_RAND           = 20;
 	
